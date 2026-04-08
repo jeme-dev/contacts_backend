@@ -31,17 +31,22 @@ const createContact = asyncHandler(async (req, res) => {
     .status(200)
     .json({ req: req.body, message: "Contact created successfully" });
 });
-
-//@desc Get a specific contact
-//@route GET /api/contacts/:id
+//@desc Get contacts by name (starts with)
+//@route GET /api/contacts/name/:name
 //@access private
 const getSpecificContact = asyncHandler(async (req, res) => {
-  const contact = await Contact.findById(req.params.id);
-  if (!contact) {
+  const contacts = await Contact.find({ 
+    name: { $regex: `^${req.params.name}`, $options: "i" }, 
+    user_id: req.user.id 
+  });
+
+  // For .find(), check if the array is empty
+  if (!contacts || contacts.length === 0) {
     res.status(404);
-    throw new Error("Contact not found");
+    throw new Error("No contacts found starting with that name");
   }
-  res.status(200).json(contact);
+
+  res.status(200).json(contacts);
 });
 
 //@desc Update a specific contact

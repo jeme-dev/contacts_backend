@@ -12,7 +12,7 @@ const {
 router.use(validateTokenHandler);
 router.route("/").get(getContact).post(createContact);
 router
-  .route("/:id")
+  .route("/:name")
   .get(getSpecificContact)
   .put(updateContact)
   .delete(deleteContact);

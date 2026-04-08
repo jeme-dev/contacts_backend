@@ -2,9 +2,14 @@ const express = require('express')
 const dotenv = require('dotenv').config()
 const errorHandler = require("./middleware/errorHandler")
 const connectDB = require('./config/dbConnection')
+const cors = require('cors');
 
 const app = express()
 connectDB()
+app.use(cors({
+  origin: "http://localhost:5173",
+  allowedHeaders: ["Content-Type", "Authorization"] 
+}));
 
 const port = process.env.PORT || 5000 
 //to parse the json file from the request body 
