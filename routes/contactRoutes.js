@@ -14,7 +14,6 @@ router.route("/").get(getContact).post(createContact);
 router
   .route("/:name")
   .get(getSpecificContact)
-  .put(updateContact)
-  .delete(deleteContact);
 
+router.route("/:id").put(updateContact).delete(deleteContact);
 module.exports = router;

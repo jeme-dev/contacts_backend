@@ -40,7 +40,6 @@ const getSpecificContact = asyncHandler(async (req, res) => {
     user_id: req.user.id 
   });
 
-  // For .find(), check if the array is empty
   if (!contacts || contacts.length === 0) {
     res.status(404);
     throw new Error("No contacts found starting with that name");
