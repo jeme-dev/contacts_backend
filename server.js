@@ -21,7 +21,7 @@ app.use(cors({
 
 // Handle preflight requests
 app.options('*', cors());
-const port = process.env.PORT || 5000 
+const port = process.env.PORT 
 //to parse the json file from the request body 
 app.use(express.json())
 app.use("/api/contacts", require("./routes/contactRoutes"))
