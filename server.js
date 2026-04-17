@@ -20,7 +20,7 @@ app.use(cors({
 }));
 
 // Handle preflight requests
-app.options('/(.*)', cors()); 
+// app.options('/(.*)', cors()); 
 const port = process.env.PORT 
 //to parse the json file from the request body 
 app.use(express.json())
