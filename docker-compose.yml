@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env  # This tells Docker to load every variable inside your .env file
+    networks:
+      - mycontacts-network
+
+networks:
+  mycontacts-network:

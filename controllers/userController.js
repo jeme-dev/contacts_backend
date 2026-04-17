@@ -37,21 +37,29 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error("all fields are required");
   }
   const user = await User.findOne({ email });
-  const checkingPassword = await bcrypt.compare(password, user.password);
-  if (user && checkingPassword) {
-    const accessToken = jwt.sign({
-      user: {
-        name: user.name,
-        email: user.email,
-        id: user.id,
-      },
-    }, process.env.ACCESS_TOKEN_SECRET ,  {
-      expiresIn : "10m"
-    } );
-    res.status(200).json({accessToken});
-  }else {
+  if (!user) {
     res.status(401);
-    throw new Error("email or password is not valid");
+    throw new Error("the use does not found");
+  }
+  const checkingPassword = await bcrypt.compare(password, user.password);
+  if (checkingPassword) {
+    const accessToken = jwt.sign(
+      {
+        user: {
+          name: user.name,
+          email: user.email,
+          id: user.id,
+        },
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: "10m",
+      },
+    );
+    res.status(200).json({ accessToken });
+  } else {
+    res.status(401);
+    throw new Error("the password  password is not valid");
   }
 });
 //@desc current user
@@ -59,7 +67,7 @@ const loginUser = asyncHandler(async (req, res) => {
 //@access private
 const currentUser = asyncHandler(async (req, res) => {
   console.log("current user");
-  res.json({"message":"current user"});
+  res.json({ message: "current user" });
 });
 
 module.exports = { registerUser, loginUser, currentUser };

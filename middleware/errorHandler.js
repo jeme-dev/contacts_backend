@@ -2,6 +2,7 @@ const { constants } = require("../constants");
 const { stack } = require("../routes/contactRoutes");
 const errorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode ? res.statusCode : 500;
+  res.status(statusCode)
   switch (statusCode) {
     case constants.VALIDATION_ERROR:
       res.json({
@@ -10,6 +11,13 @@ const errorHandler = (err, req, res, next) => {
         stackTrace: err.stack,
       });
       break;
+    case constants.UNOTHORIZED:
+      res.json({
+        title:"UNOTHORIZED",
+        message:err.message,
+        stackTrace:err.stack
+      })
+      break ;
     case constants.NOT_FOUND:
       res.json({
         title: "NOT FOUND",
