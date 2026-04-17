@@ -29,6 +29,7 @@ app.use("/api/users", require("./routes/userRoutes"))
 //to handle errors 
 app.use(errorHandler)
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`server is running on port ${port}`)
+    console.log(`ALLOWED_ORIGIN is: ${process.env.ALLOWED_ORIGIN}`) // debug line
 })
